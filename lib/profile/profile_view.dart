@@ -39,23 +39,12 @@ class _ProfileView extends GetView<ProfileController> {
   Widget _buildProfileHeader(ThemeData theme, bool isDark) {
     return Container(
       padding: const EdgeInsets.all(24),
+
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: isDark
-              ? [const Color(0xFF2D3436), const Color(0xFF636E72)]
-              : [const Color(0xFF74B9FF), const Color(0xFF0984E3)],
-        ),
+        color: theme.primaryColor,
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: (isDark ? const Color(0xFF2D3436) : const Color(0xFF0984E3)).withValues(alpha: 0.3),
-            blurRadius: 15,
-            offset: const Offset(0, 8),
-          ),
-        ],
       ),
+
       child: Row(
         children: [
           Container(
@@ -326,9 +315,9 @@ class _StatCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: isDark ? 0.2 : 0.1),
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: color.withValues(alpha: 0.3)),
+        border: Border.all(color: theme.dividerColor),
       ),
       child: Column(
         children: [

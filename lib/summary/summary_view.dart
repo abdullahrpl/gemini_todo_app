@@ -34,21 +34,8 @@ class _SummaryView extends GetView<SummaryController> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: isDark
-              ? [const Color(0xFF1E3A5F), const Color(0xFF2D5A87)]
-              : [const Color(0xFF667EEA), const Color(0xFF764BA2)],
-        ),
+        color: theme.primaryColor,
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: (isDark ? const Color(0xFF1E3A5F) : const Color(0xFF667EEA)).withValues(alpha: 0.3),
-            blurRadius: 15,
-            offset: const Offset(0, 8),
-          ),
-        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -151,8 +138,8 @@ class _SummaryView extends GetView<SummaryController> {
 
   Widget _buildLoadingState(ThemeData theme) {
     final isDark = theme.brightness == Brightness.dark;
-    final baseColor = isDark ? Colors.grey.shade800 : Colors.grey.shade300;
-    final highlightColor = isDark ? Colors.grey.shade700 : Colors.grey.shade100;
+    final baseColor = theme.colorScheme.surfaceContainerHighest;
+    final highlightColor = theme.colorScheme.surface;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4),

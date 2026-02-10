@@ -95,9 +95,9 @@ class SummaryController extends GetxController {
 
   String _buildPrompt(List<Map<String, dynamic>> agendas) {
     final buffer = StringBuffer();
-    buffer.writeln('Please provide a concise and helpful summary of my upcoming schedule/agenda items below.');
-    buffer.writeln('Highlight any important items, conflicts, or suggestions for time management.');
-    buffer.writeln('Format the response in a clear, readable way with sections if needed.');
+    buffer.writeln('Tolong berikan ringkasan yang singkat dan bermanfaat tentang agenda saya di bawah ini dalam Bahasa Indonesia.');
+    buffer.writeln('Soroti hal-hal penting, konflik jadwal, atau saran manajemen waktu.');
+    buffer.writeln('Format respon dengan jelas dan mudah dibaca.');
     buffer.writeln('');
     buffer.writeln('My Agenda Items:');
     buffer.writeln('');

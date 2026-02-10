@@ -199,28 +199,30 @@ class _AgendaCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<AgendaController>();
-    Theme.of(context);
+    final theme = Theme.of(context);
 
-    final gradientColors = isUpcoming
-        ? [
-            isDark ? const Color(0xFF1E3A5F) : const Color(0xFF4A90D9),
-            isDark ? const Color(0xFF2D5A87) : const Color(0xFF67A8E5),
-          ]
-        : [isDark ? Colors.grey.shade800 : Colors.grey.shade400, isDark ? Colors.grey.shade700 : Colors.grey.shade300];
+    final cardColor = isUpcoming
+        ? (isDark ? const Color(0xFF1E3A5F) : const Color(0xFFEFF6FF)) // Dark blue or very light blue
+        : (isDark ? const Color(0xFF2D3436) : const Color(0xFFF1F5F9)); // Dark grey or light grey
 
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       child: Material(
         borderRadius: BorderRadius.circular(16),
-        elevation: isUpcoming ? 4 : 1,
-        shadowColor: gradientColors[0].withValues(alpha: 0.3),
+        color: Colors.transparent,
+        elevation: 0,
         child: InkWell(
           onTap: onTap,
           borderRadius: BorderRadius.circular(16),
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
-              gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: gradientColors),
+              color: isUpcoming && !isDark ? Colors.white : cardColor,
+              border: Border.all(
+                color: isUpcoming 
+                    ? theme.primaryColor.withValues(alpha: 0.2) 
+                    : theme.dividerColor,
+              ),
             ),
             child: Padding(
               padding: const EdgeInsets.all(16),
@@ -231,7 +233,7 @@ class _AgendaCard extends StatelessWidget {
                     width: 56,
                     height: 56,
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: isDark ? 0.1 : 0.2),
+                      color: isUpcoming ? theme.primaryColor.withValues(alpha: 0.1) : theme.disabledColor.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Column(
@@ -239,11 +241,18 @@ class _AgendaCard extends StatelessWidget {
                       children: [
                         Text(
                           DateFormat('dd').format(DateTime.parse(agenda['dateTime'])),
-                          style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            color: isUpcoming ? theme.primaryColor : theme.disabledColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold
+                          ),
                         ),
                         Text(
                           DateFormat('MMM').format(DateTime.parse(agenda['dateTime'])),
-                          style: TextStyle(color: Colors.white.withValues(alpha: 0.8), fontSize: 12),
+                          style: TextStyle(
+                            color: isUpcoming ? theme.primaryColor.withValues(alpha: 0.8) : theme.disabledColor,
+                            fontSize: 12
+                          ),
                         ),
                       ],
                     ),
@@ -255,7 +264,11 @@ class _AgendaCard extends StatelessWidget {
                       children: [
                         Text(
                           agenda['title'],
-                          style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
+                          style: TextStyle(
+                            color: theme.textTheme.bodyLarge?.color,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600
+                          ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -263,7 +276,10 @@ class _AgendaCard extends StatelessWidget {
                           const SizedBox(height: 4),
                           Text(
                             agenda['description'],
-                            style: TextStyle(color: Colors.white.withValues(alpha: 0.7), fontSize: 13),
+                            style: TextStyle(
+                              color: theme.textTheme.bodyMedium?.color?.withValues(alpha: 0.7),
+                              fontSize: 13
+                            ),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -271,22 +287,26 @@ class _AgendaCard extends StatelessWidget {
                         const SizedBox(height: 8),
                         Row(
                           children: [
-                            Icon(Icons.access_time_rounded, size: 14, color: Colors.white.withValues(alpha: 0.7)),
+                            Icon(Icons.access_time_rounded, size: 14, color: theme.hintColor),
                             const SizedBox(width: 4),
                             Text(
                               controller.formatTime(agenda['dateTime']),
-                              style: TextStyle(color: Colors.white.withValues(alpha: 0.7), fontSize: 12),
+                              style: TextStyle(color: theme.hintColor, fontSize: 12),
                             ),
                             const SizedBox(width: 12),
                             Container(
                               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                               decoration: BoxDecoration(
-                                color: Colors.white.withValues(alpha: 0.2),
+                                color: isUpcoming ? theme.primaryColor.withValues(alpha: 0.1) : theme.disabledColor.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Text(
                                 isUpcoming ? 'Upcoming' : 'Past',
-                                style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                  color: isUpcoming ? theme.primaryColor : theme.disabledColor,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w500
+                                ),
                               ),
                             ),
                           ],
@@ -296,7 +316,7 @@ class _AgendaCard extends StatelessWidget {
                   ), // Actions
                   IconButton(
                     onPressed: onDelete,
-                    icon: Icon(Icons.delete_outline_rounded, color: Colors.white.withValues(alpha: 0.7)),
+                    icon: Icon(Icons.delete_outline_rounded, color: theme.hintColor),
                   ),
                 ],
               ),

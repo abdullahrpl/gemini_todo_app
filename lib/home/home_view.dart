@@ -17,22 +17,27 @@ class _HomeView extends GetView<HomeController> {
 
   PreferredSizeWidget _buildAppBar(ThemeData theme, bool isDark) {
     return AppBar(
-      title: Obx(() => Text(_getTitle())),
+      title: Obx(() => Text(
+        _getTitle(),
+        style: TextStyle(color: theme.colorScheme.onSurface, fontWeight: FontWeight.bold),
+      )),
       centerTitle: true,
       elevation: 0,
-      backgroundColor: Colors.transparent,
-      flexibleSpace: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: isDark
-                ? [const Color(0xFF1E3A5F), const Color(0xFF0D253F)]
-                : [const Color(0xFF667EEA), const Color(0xFF764BA2)],
-          ),
+      backgroundColor: theme.scaffoldBackgroundColor,
+      foregroundColor: theme.colorScheme.onSurface,
+      actions: [
+        IconButton(
+          onPressed: () {
+            final isDark = Get.isDarkMode;
+            Get.find<ProfileController>().setThemeMode(isDark ? ThemeMode.light : ThemeMode.dark);
+          },
+          icon: Icon(isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded),
         ),
+      ],
+      bottom: PreferredSize(
+        preferredSize: const Size.fromHeight(1),
+        child: Container(color: theme.dividerColor, height: 1),
       ),
-      foregroundColor: Colors.white,
     );
   }
 
@@ -52,38 +57,36 @@ class _HomeView extends GetView<HomeController> {
   Widget _buildBottomNavBar(ThemeData theme, bool isDark) {
     return Container(
       decoration: BoxDecoration(
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.1), blurRadius: 20, offset: const Offset(0, -5))],
+        color: theme.scaffoldBackgroundColor,
+        border: Border(top: BorderSide(color: theme.dividerColor)),
       ),
-      child: ClipRRect(
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-        child: BottomNavigationBar(
-          currentIndex: controller.currentIndex.value,
-          onTap: controller.changeTab,
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: theme.scaffoldBackgroundColor,
-          selectedItemColor: isDark ? const Color(0xFF67A8E5) : const Color(0xFF667EEA),
-          unselectedItemColor: theme.colorScheme.onSurface.withValues(alpha: 0.4),
-          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
-          unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal, fontSize: 12),
-          elevation: 0,
-          items: [
-            BottomNavigationBarItem(
-              icon: _buildNavIcon(Icons.event_note_outlined, 0),
-              activeIcon: _buildNavIcon(Icons.event_note_rounded, 0, isActive: true),
-              label: 'Agenda',
-            ),
-            BottomNavigationBarItem(
-              icon: _buildNavIcon(Icons.auto_awesome_outlined, 1),
-              activeIcon: _buildNavIcon(Icons.auto_awesome_rounded, 1, isActive: true),
-              label: 'Summary',
-            ),
-            BottomNavigationBarItem(
-              icon: _buildNavIcon(Icons.person_outline_rounded, 2),
-              activeIcon: _buildNavIcon(Icons.person_rounded, 2, isActive: true),
-              label: 'Profile',
-            ),
-          ],
-        ),
+      child: BottomNavigationBar(
+        currentIndex: controller.currentIndex.value,
+        onTap: controller.changeTab,
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: theme.scaffoldBackgroundColor,
+        selectedItemColor: theme.primaryColor,
+        unselectedItemColor: theme.colorScheme.onSurface.withValues(alpha: 0.4),
+        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
+        unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal, fontSize: 12),
+        elevation: 0,
+        items: [
+          BottomNavigationBarItem(
+            icon: _buildNavIcon(Icons.event_note_outlined, 0),
+            activeIcon: _buildNavIcon(Icons.event_note_rounded, 0, isActive: true),
+            label: 'Agenda',
+          ),
+          BottomNavigationBarItem(
+            icon: _buildNavIcon(Icons.auto_awesome_outlined, 1),
+            activeIcon: _buildNavIcon(Icons.auto_awesome_rounded, 1, isActive: true),
+            label: 'Summary',
+          ),
+          BottomNavigationBarItem(
+            icon: _buildNavIcon(Icons.person_outline_rounded, 2),
+            activeIcon: _buildNavIcon(Icons.person_rounded, 2, isActive: true),
+            label: 'Profile',
+          ),
+        ],
       ),
     );
   }
@@ -92,13 +95,13 @@ class _HomeView extends GetView<HomeController> {
     final theme = Theme.of(Get.context!);
     final isDark = theme.brightness == Brightness.dark;
 
-    final selectedColor = isDark ? const Color(0xFF67A8E5) : const Color(0xFF667EEA);
+    final selectedColor = theme.primaryColor;
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       padding: EdgeInsets.all(isActive ? 10 : 8),
       decoration: BoxDecoration(
-        color: isActive ? selectedColor.withValues(alpha: 0.15) : Colors.transparent,
+        color: isActive ? selectedColor.withValues(alpha: 0.1) : Colors.transparent,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Icon(icon, size: isActive ? 26 : 24),

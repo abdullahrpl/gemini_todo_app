@@ -11,13 +11,7 @@ class _SplashView extends GetView<SplashController> {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: isDark
-                ? [const Color(0xFF0D1117), const Color(0xFF161B22)]
-                : [const Color(0xFF667EEA), const Color(0xFF764BA2)],
-          ),
+          color: theme.primaryColor,
         ),
         child: Center(
           child: Column(

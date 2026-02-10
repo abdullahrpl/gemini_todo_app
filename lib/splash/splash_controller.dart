@@ -1,7 +1,6 @@
 import 'dart:developer' show log;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:gemini_todo_app/mediator/i_mediator_data.dart';
 import 'package:get/get.dart';
 
@@ -26,7 +25,7 @@ class SplashController extends GetxController {
     await Future.delayed(const Duration(milliseconds: 100));
 
     // Initialize Gemini API
-    Gemini.init(apiKey: 'AIzaSyDOFlEMiBvfdsiNaBpySTXNsX6aBW4rJIA');
+    // Gemini.init is now in main.dart
 
     // Wait for splash animation
     await Future.delayed(const Duration(seconds: 2));
