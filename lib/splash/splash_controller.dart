@@ -2,6 +2,7 @@ import 'dart:developer' show log;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
+import 'package:gemini_todo_app/mediator/i_mediator_data.dart';
 import 'package:get/get.dart';
 
 import '../mediator/i_mediator.dart';

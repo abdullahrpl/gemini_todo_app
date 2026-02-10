@@ -1,4 +1,4 @@
-part of 'mediator.dart';
+part of './mediator_data.dart';
 
 class MediatorData implements IMediatorData {
   final _agendaItems = List<Map<String, dynamic>>.from(LiteStorage.read('agendas') ?? <Map<String, dynamic>>[]);

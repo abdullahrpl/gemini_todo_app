@@ -8,7 +8,7 @@ import '../splash/splash_controller.dart';
 import 'i_mediator.dart';
 import 'i_mediator_data.dart';
 
-part 'mediator_data.dart';
+part './mediator.dart';
 
 class Mediator implements IMediator {
   static late Mediator instance;

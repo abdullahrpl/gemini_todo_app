@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gemini_todo_app/mediator/mediator_data.dart';
 import 'package:get/get.dart';
 import 'package:lite_storage/lite_storage.dart';
-
-import 'mediator/mediator.dart';
 import 'profile/profile_controller.dart';
 
 void main() async {
